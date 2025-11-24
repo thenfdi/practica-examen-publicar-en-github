@@ -21,6 +21,14 @@
   </head>
   <body style="background-color:violet;">
     <h1>HOLA Git XD !</h1>
+    <div id="robot" style="position: fixed; font-size: 40px; pointer-events: none; z-index: 1000;">🤖</div>
+<script>
+    const m = document.getElementById('robot');
+    document.addEventListener('mousemove', f => {
+        m.style.left = (f.clientX + 20) + 'px';
+        m.style.top = (f.clientY + 20) + 'px';
+    })
+</script>
     <p  style="font-size: 64px;">Examen-pratica</p>
 
     <h2>editando el html</h2>
