@@ -1,92 +1,305 @@
-<!DOCTYPE html>
-<html lang="es">
+<html lang="en-US">
+
   <head>
+
     <meta charset="utf-8" />
+
     <meta name="viewport" content="width=device-width" />
+
     <title>Mi experimento CSS + Git</title>
-    
+
+   
+
     <style>
-      /* ESTILOS GENERALES */
-      body {
-        /* Aseguramos que el body ocupe toda la pantalla para que el ratón funcione bien */
-        min-height: 100vh;
-        margin: 0;
-        background-color: violet;
-        overflow-x: hidden; /* Evita barras de scroll laterales molestas */
-      }
+
+     
 
       h1 {
+
         color: white;
+
         background-color: green;
+
         border: 1px solid black;
+
       }
+
+
 
       p {
+
         color: aliceblue;
+
         background-color: rgb(150, 44, 248);
+
         border: 3px black solid;
+
         font-size: medium;
+
       }
 
-      /* ESTILOS DEL ROBOT (MODIFICADOS PARA MOVIMIENTO) */
+
+
+     
+
       #robo-mascota {
-        /* Usamos fixed para que siga al ratón respecto a la ventana */
-        position: fixed; 
-        /* Quitamos bottom y right fijos, ahora los controla JS */
-        
-        width: 100px;
-        height: 100px;
-        background: #2d3436; 
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-        z-index: 1000;
-        
-        /* IMPORTANTE: Esto permite hacer clic "a través" del robot */
-        pointer-events: none; 
 
-        /* SUAVIZADO: Esto crea el efecto de que el robot tiene "peso" y te sigue */
-        transition: top 0.1s ease-out, left 0.1s ease-out, transform 0.2s;
+        position: fixed;
+
+        bottom: 20px;
+
+        right: 20px;
+
+        width: 100px;
+
+        height: 100px;
+
+        background: #2d3436;
+
+        border-radius: 20px;
+
+        display: flex;
+
+        justify-content: center;
+
+        align-items: center;
+
+        flex-direction: column;
+
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+
+        z-index: 1000;
+
+        cursor: pointer;
+
+        transition: transform 0.2s;
+
       }
 
-      /* La animación de escala al hacer hover se pierde un poco 
-         porque pointer-events:none desactiva el hover, 
-         pero es necesario para poder usar la web */
+
+
+      #robo-mascota:hover {
+
+        transform: scale(1.1);
+
+      }
+
+
+
+     
 
       .antenna {
+
         width: 4px;
+
         height: 20px;
+
         background: #e17055;
+
         position: absolute;
+
         top: -20px;
+
         animation: bip-bip 2s infinite;
+
       }
-      
+
+     
+
       .antenna::after {
+
         content: '';
+
         position: absolute;
+
         top: -8px;
+
         left: -3px;
+
         width: 10px;
+
         height: 10px;
+
         background: #e17055;
+
         border-radius: 50%;
+
       }
+
+
+
+     
 
       .eyes-container {
+
         display: flex;
+
         gap: 10px;
+
         margin-top: 10px;
+
       }
 
+
+
       .eye {
+
         width: 30px;
+
         height: 30px;
+
         background: white;
+
         border-radius: 50%;
+
         position: relative;
+
         overflow: hidden;
-        box-shadow: inset 0 0 5
+
+        box-shadow: inset 0 0 5px rgba(0,0,0,0.5);
+
+      }
+
+
+
+      .pupil {
+
+        width: 12px;
+
+        height: 12px;
+
+        background: #0984e3;
+
+        border-radius: 50%;
+
+        position: absolute;
+
+        top: 50%;
+
+        left: 50%;
+
+        transform: translate(-50%, -50%);
+
+        transition: all 0.05s ease-out;
+
+      }
+
+
+
+ 
+
+      .mouth {
+
+        width: 40px;
+
+        height: 6px;
+
+        background: #dfe6e9;
+
+        margin-top: 15px;
+
+        border-radius: 5px;
+
+      }
+
+
+
+      @keyframes bip-bip {
+
+        0%, 100% { opacity: 1; }
+
+        50% { opacity: 0.5; }
+
+      }
+
+    </style>
+
+  </head>
+
+
+
+  <body style="background-color:violet;">
+
+   
+
+    <h1>HOLA Git XD !</h1>
+
+    <p style="font-size: 64px;">Examen-pratica</p>
+
+
+
+    <h2>editando el html</h2>
+
+    <p>confirmando el commit</p>
+
+    <h1>¡HALA MADRID!</h1>
+
+
+
+    <div id="robo-mascota">
+
+      <div class="antenna"></div>
+
+      <div class="eyes-container">
+
+        <div class="eye"><div class="pupil"></div></div>
+
+        <div class="eye"><div class="pupil"></div></div>
+
+      </div>
+
+      <div class="mouth"></div>
+
+    </div>
+
+
+
+    <footer>Este es el pie de página ~ Año 2005 </footer>
+
+
+
+    <script>
+
+      const pupils = document.querySelectorAll('.pupil');
+
+     
+
+      document.addEventListener('mousemove', (e) => {
+
+        pupils.forEach((pupil) => {
+
+          const eye = pupil.parentElement;
+
+          const eyeRect = eye.getBoundingClientRect();
+
+          const eyeCenterX = eyeRect.left + eyeRect.width / 2;
+
+          const eyeCenterY = eyeRect.top + eyeRect.height / 2;
+
+
+
+          const angle = Math.atan2(e.clientY - eyeCenterY, e.clientX - eyeCenterX);
+
+          const distance = 7;
+
+
+
+          const x = Math.cos(angle) * distance;
+
+          const y = Math.sin(angle) * distance;
+
+
+
+          pupil.style.transform = `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))`;
+
+        });
+
+      });
+
+    </script>
+
+
+
+  </body>
+
+</html>
